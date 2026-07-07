@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Gera dist/guia-completo-de-exercicios.pdf a partir de build/guia.html
+# Uso: bash build/build_pdf.sh
 set -euo pipefail
 cd "$(dirname "$0")/.."
 python3 build/gerar_html.py
