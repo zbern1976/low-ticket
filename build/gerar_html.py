@@ -229,46 +229,128 @@ ARROW = ('<div class="arrow"><svg viewBox="0 0 24 24" fill="none">'
          'stroke-linecap="round" stroke-linejoin="round"/></svg></div>')
 e = html.escape
 
+# --------------------------------------------------------------------------- i18n
+# Mapas de VALORES do JSON (que estão em PT) para EN. No modo pt, usa-se o valor cru.
+GRP_EN = {  # por slug do grupo (campo "grupo")
+    "peito": "Chest", "costas": "Back", "ombros": "Shoulders", "biceps": "Biceps",
+    "triceps": "Triceps", "antebraco": "Forearms & Grip", "abdomen": "Abs & Core",
+    "quadriceps": "Legs — Quadriceps & Glutes (front focus)",
+    "posteriores": "Legs — Hamstrings & Glutes", "panturrilha": "Calves",
+    "cardio": "Cardio & Full Body", "pescoco": "Neck",
+}
+MUS_EN = {
+    "Abdômen": "Abs", "Abdutores": "Abductors", "Adutores": "Adductors", "Bíceps": "Biceps",
+    "Panturrilhas": "Calves", "Peitoral": "Chest", "Antebraços": "Forearms", "Glúteos": "Glutes",
+    "Posteriores de coxa": "Hamstrings", "Dorsais": "Lats", "Lombar": "Lower back",
+    "Meio das costas": "Middle back", "Pescoço": "Neck", "Quadríceps": "Quadriceps",
+    "Ombros": "Shoulders", "Trapézio": "Traps", "Tríceps": "Triceps",
+}
+EQP_EN = {
+    "Barra": "Barbell", "Halteres": "Dumbbell", "Peso corporal": "Bodyweight",
+    "Cabo/Polia": "Cable", "Máquina": "Machine", "Kettlebell": "Kettlebell", "Elástico": "Band",
+    "Medicine ball": "Medicine ball", "Bola suíça": "Exercise ball", "Barra W": "EZ bar",
+    "Rolo de espuma": "Foam roll", "Acessórios": "Other", "Sem equipamento": "No equipment",
+}
+LVL_EN = {"Iniciante": "Beginner", "Intermediário": "Intermediate", "Avançado": "Advanced"}
+MEC_EN = {"Composto": "Compound", "Isolado": "Isolation"}
+FRC_EN = {"Empurrar": "Push", "Puxar": "Pull", "Estático": "Static"}
+
+# Strings de interface por idioma
+T = {
+    "pt": {
+        "html_lang": "pt-BR", "title": "Guia Completo de Exercícios — Atlas de Treino",
+        "out": REPO / "build/guia.html", "capdir": REPO / "content/capitulos",
+        "instr": "instrucoes", "qr": "qrcode", "footer_run": "ATLAS DE TREINO — GUIA COMPLETO DE EXERCÍCIOS",
+        "cover_tag": "GCE · 2026", "cover_manual": "Manual Técnico de Treino", "cover_fmt": "A4 · PT-BR",
+        "cover_lines": [("t1", "GUIA"), ("t1", "COMPLETO"), ("t2", "DE"), ("t3", "EXERCÍCIOS")],
+        "cover_sub": "{n} exercícios ilustrados com fotos, passo a passo e vídeos — para treinar em casa ou na academia.",
+        "spec": ["Exercícios", "Grupos", "Equipamentos", "Rotinas"],
+        "toc_eyebrow": "Atlas de Treino · Conteúdo", "toc_title": "SUMÁRIO", "toc_chapter": "Capítulo",
+        "toc_exercises": "exercícios", "toc_index": "Índice por Equipamento", "toc_groups": "grupos",
+        "toc_foot": "17 capítulos · {n} fichas técnicas · 6 rotinas prontas",
+        "div_top": "Atlas de Treino — Grupo Muscular {i} / {t}", "div_chapno": "CAPÍTULO {c}",
+        "div_sub": "{n} exercícios ilustrados — cada ficha traz o músculo alvo, o equipamento, o nível, fotos da posição inicial e final, execução passo a passo e QR code com vídeo.",
+        "div_foot_name": "Guia Completo de Exercícios", "div_foot_page": "Pág. {n}",
+        "chip_alvo": "Alvo", "chip_equip": "Equip.", "chip_nivel": "Nível", "chip_mec": "Mecânica",
+        "chip_forca": "Força", "chip_aux": "Aux.", "card_lbl": "Ficha", "steps_h": "Passo a passo",
+        "video_h": "Vídeo do exercício", "video_cap": "Aponte a câmera do celular para o código e assista à demonstração em vídeo.",
+        "idx_title": "ÍNDICE POR EQUIPAMENTO",
+        "idx_lead": "Todos os {n} exercícios organizados pelo equipamento necessário — encontre rápido o que dá para treinar com o que você tem à mão.",
+        "aviso": "<b>Aviso legal:</b> este material tem caráter educacional e não substitui a orientação individualizada de um profissional de educação física ou médico. Se você tem qualquer condição de saúde, lesão prévia ou dor persistente, consulte um profissional antes de iniciar qualquer programa de exercícios. Fotos e dados-base: free-exercise-db (domínio público). Texto em português: conteúdo original.",
+    },
+    "en": {
+        "html_lang": "en", "title": "Complete Exercise Guide — Training Atlas",
+        "out": REPO / "build/guide-en.html", "capdir": REPO / "content/capitulos-en",
+        "instr": "instrucoes_en", "qr": "qrcode_en", "footer_run": "TRAINING ATLAS — COMPLETE EXERCISE GUIDE",
+        "cover_tag": "CEG · 2026", "cover_manual": "Technical Training Manual", "cover_fmt": "A4 · EN",
+        "cover_lines": [("t1", "COMPLETE"), ("t1", "EXERCISE"), ("t3", "GUIDE")],
+        "cover_sub": "{n} illustrated exercises with photos, step-by-step instructions and videos — to train at home or at the gym.",
+        "spec": ["Exercises", "Groups", "Equipment", "Routines"],
+        "toc_eyebrow": "Training Atlas · Contents", "toc_title": "CONTENTS", "toc_chapter": "Chapter",
+        "toc_exercises": "exercises", "toc_index": "Index by Equipment", "toc_groups": "groups",
+        "toc_foot": "17 chapters · {n} technical cards · 6 ready-made routines",
+        "div_top": "Training Atlas — Muscle Group {i} / {t}", "div_chapno": "CHAPTER {c}",
+        "div_sub": "{n} illustrated exercises — each card shows the target muscle, equipment, level, photos of the start and end positions, step-by-step execution and a QR code with video.",
+        "div_foot_name": "Complete Exercise Guide", "div_foot_page": "P. {n}",
+        "chip_alvo": "Target", "chip_equip": "Equip.", "chip_nivel": "Level", "chip_mec": "Mechanics",
+        "chip_forca": "Force", "chip_aux": "Sec.", "card_lbl": "Card", "steps_h": "Step by step",
+        "video_h": "Exercise video", "video_cap": "Point your phone camera at the code and watch the video demonstration.",
+        "idx_title": "INDEX BY EQUIPMENT",
+        "idx_lead": "All {n} exercises organized by the equipment needed — quickly find what you can train with whatever you have on hand.",
+        "aviso": "<b>Disclaimer:</b> this material is educational and does not replace individualized guidance from a certified fitness professional or physician. If you have any health condition, previous injury or persistent pain, consult a professional before starting any exercise program. Photos and base data: free-exercise-db (public domain). English text: original content.",
+    },
+}
+
 # --------------------------------------------------------------------------- build
-def main():
+def main(lang="pt"):
+    t = T[lang]
     EX = json.loads(EXPATH.read_text(encoding="utf-8"))
-    caps = [p.read_text(encoding="utf-8") for p in sorted(CAPDIR.glob("*.md"))]
+    caps = [p.read_text(encoding="utf-8") for p in sorted(t["capdir"].glob("*.md"))]
     cap_titles = [c.split("\n")[0].lstrip("# ").strip() for c in caps]
     cap_html   = [md_para_html(c) for c in caps]
+
+    def gtitulo(x):  # título do grupo no idioma
+        return GRP_EN[x["grupo"]] if lang == "en" else x["grupo_titulo"]
+    def mapv(dic, v):
+        return dic.get(v, v) if lang == "en" else v
+    def nome(x):     # nome de exibição do exercício
+        return x["nome_original"] if lang == "en" else x["nome"]
 
     groups, order = {}, []
     for x in EX:
         if x["grupo"] not in groups:
-            groups[x["grupo"]] = {"titulo": x["grupo_titulo"], "itens": []}; order.append(x["grupo"])
+            groups[x["grupo"]] = {"titulo": gtitulo(x), "itens": []}; order.append(x["grupo"])
         groups[x["grupo"]]["itens"].append(x)
     n_eq = len({x["equipamento"] for x in EX})
     C = sum(CHAPTER_PAGES)
 
-    P = [f"<!DOCTYPE html><html lang='pt-BR'><head><meta charset='utf-8'>"
+    css = CSS.replace("ATLAS DE TREINO — GUIA COMPLETO DE EXERCÍCIOS", t["footer_run"])
+
+    P = [f"<!DOCTYPE html><html lang='{t['html_lang']}'><head><meta charset='utf-8'>"
          f"<meta name='viewport' content='width=device-width,initial-scale=1'>"
-         f"<title>Guia Completo de Exercícios — Atlas de Treino</title><style>{CSS}</style></head><body>"]
+         f"<title>{e(t['title'])}</title><style>{css}</style></head><body>"]
 
     # CAPA
+    lines = "".join(f'<div class="t {cls}">{txt}</div>' for cls, txt in t["cover_lines"])
+    specs = "".join(f'<div class="spec"><div class="l">{lbl}</div><div class="n">{val}</div></div>'
+                    for lbl, val in zip(t["spec"], [len(EX), len(order), n_eq, 6]))
     P.append(f"""<section class="sheet sheet--bleed capa"><div class="grid"></div><div class="ghost">{len(EX)}</div>
-      <div class="top"><span class="o">GCE · 2026</span><span>Manual Técnico de Treino</span><span>A4 · PT-BR</span></div>
-      <div class="mid"><div class="t t1">GUIA</div><div class="t t1">COMPLETO</div><div class="t t2">DE</div><div class="t t3">EXERCÍCIOS</div>
-        <div class="subwrap"><div class="bar"></div><p class="sub">{len(EX)} exercícios ilustrados com fotos, passo a passo e vídeos — para treinar em casa ou na academia.</p></div></div>
-      <div class="specs"><div class="spec"><div class="l">Exercícios</div><div class="n">{len(EX)}</div></div>
-        <div class="spec"><div class="l">Grupos</div><div class="n">{len(order)}</div></div>
-        <div class="spec"><div class="l">Equipamentos</div><div class="n">{n_eq}</div></div>
-        <div class="spec"><div class="l">Rotinas</div><div class="n">6</div></div></div></section>""")
+      <div class="top"><span class="o">{t['cover_tag']}</span><span>{t['cover_manual']}</span><span>{t['cover_fmt']}</span></div>
+      <div class="mid">{lines}
+        <div class="subwrap"><div class="bar"></div><p class="sub">{t['cover_sub'].format(n=len(EX))}</p></div></div>
+      <div class="specs">{specs}</div></section>""")
 
     # SUMÁRIO
     rows = ""
-    for idx, t in enumerate(cap_titles):
-        rows += f"<div class='sum-row'><span class='n'>{idx+1:02d}</span><span class='t'>{e(t)}</span><span class='dots'></span><span class='c muted'>Capítulo</span></div>"
+    for idx, tt in enumerate(cap_titles):
+        rows += f"<div class='sum-row'><span class='n'>{idx+1:02d}</span><span class='t'>{e(tt)}</span><span class='dots'></span><span class='c muted'>{t['toc_chapter']}</span></div>"
     for idx, g in enumerate(order):
         s = groups[g]
-        rows += f"<div class='sum-row'><span class='n'>{idx+5:02d}</span><span class='t'>{e(s['titulo'])}</span><span class='dots'></span><span class='c'>{len(s['itens'])} exercícios</span></div>"
-    rows += f"<div class='sum-row'><span class='n'>17</span><span class='t'>Índice por Equipamento</span><span class='dots'></span><span class='c muted'>{n_eq} grupos</span></div>"
-    P.append(f"""<section class="sheet sheet--bleed sumario"><div class="sum-eyebrow"><span class="r"></span>Atlas de Treino · Conteúdo</div>
-      <h1 class="sum-title">SUMÁRIO</h1><div class="sum-list">{rows}</div>
-      <div class="sum-foot">17 capítulos · {len(EX)} fichas técnicas · 6 rotinas prontas</div></section>""")
+        rows += f"<div class='sum-row'><span class='n'>{idx+5:02d}</span><span class='t'>{e(s['titulo'])}</span><span class='dots'></span><span class='c'>{len(s['itens'])} {t['toc_exercises']}</span></div>"
+    rows += f"<div class='sum-row'><span class='n'>17</span><span class='t'>{t['toc_index']}</span><span class='dots'></span><span class='c muted'>{n_eq} {t['toc_groups']}</span></div>"
+    P.append(f"""<section class="sheet sheet--bleed sumario"><div class="sum-eyebrow"><span class="r"></span>{t['toc_eyebrow']}</div>
+      <h1 class="sum-title">{t['toc_title']}</h1><div class="sum-list">{rows}</div>
+      <div class="sum-foot">{t['toc_foot'].format(n=len(EX))}</div></section>""")
 
     # CAPÍTULOS
     for h in cap_html:
@@ -279,48 +361,52 @@ def main():
     ficha = 0
     for gi, g in enumerate(order):
         s = groups[g]; chap = f"{gi+5:02d}"; page_no += 1
-        items = "".join(f"<div class='item'><span class='n'>{i+1:02d}</span>{e(x['nome'])}</div>" for i, x in enumerate(s["itens"]))
+        items = "".join(f"<div class='item'><span class='n'>{i+1:02d}</span>{e(nome(x))}</div>" for i, x in enumerate(s["itens"]))
         P.append(f"""<section class="sheet sheet--bleed divisor"><div class="grid"></div><div class="ghostnum">{chap}</div>
-          <div class="div-top"><span class="rule"></span>Atlas de Treino — Grupo Muscular {gi+1:02d} / {len(order)}</div>
-          <div class="div-mid"><div class="div-chapno">CAPÍTULO {chap}</div><div class="div-name">{e(s['titulo']).upper()}</div>
-            <p class="div-sub">{len(s['itens'])} exercícios ilustrados — cada ficha traz o músculo alvo, o equipamento, o nível, fotos da posição inicial e final, execução passo a passo e QR code com vídeo.</p></div>
+          <div class="div-top"><span class="rule"></span>{t['div_top'].format(i=f'{gi+1:02d}', t=len(order))}</div>
+          <div class="div-mid"><div class="div-chapno">{t['div_chapno'].format(c=chap)}</div><div class="div-name">{e(s['titulo']).upper()}</div>
+            <p class="div-sub">{t['div_sub'].format(n=len(s['itens']))}</p></div>
           <div class="div-list">{items}</div>
-          <div class="div-foot"><span>Guia Completo de Exercícios</span><span>Pág. {page_no}</span></div></section>""")
+          <div class="div-foot"><span>{t['div_foot_name']}</span><span>{t['div_foot_page'].format(n=page_no)}</span></div></section>""")
         for x in s["itens"]:
             ficha += 1; page_no += 1
-            chips = (f"<span class='chip chip--alvo'>Alvo · {e(x['musculo_alvo'])}</span>"
-                     f"<span class='chip chip--out'><b>Equip.</b> {e(x['equipamento'])}</span>"
-                     f"<span class='chip chip--out'><b>Nível</b> {e(x['nivel'])}</span>")
+            chips = (f"<span class='chip chip--alvo'>{t['chip_alvo']} · {e(mapv(MUS_EN, x['musculo_alvo']))}</span>"
+                     f"<span class='chip chip--out'><b>{t['chip_equip']}</b> {e(mapv(EQP_EN, x['equipamento']))}</span>"
+                     f"<span class='chip chip--out'><b>{t['chip_nivel']}</b> {e(mapv(LVL_EN, x['nivel']))}</span>")
             if x.get("mecanica") and x["mecanica"] != "—":
-                chips += f"<span class='chip chip--out'><b>Mecânica</b> {e(x['mecanica'])}</span>"
+                chips += f"<span class='chip chip--out'><b>{t['chip_mec']}</b> {e(mapv(MEC_EN, x['mecanica']))}</span>"
             if x.get("forca") and x["forca"] != "—":
-                chips += f"<span class='chip chip--out'><b>Força</b> {e(x['forca'])}</span>"
+                chips += f"<span class='chip chip--out'><b>{t['chip_forca']}</b> {e(mapv(FRC_EN, x['forca']))}</span>"
             if x.get("musculos_secundarios"):
-                chips += f"<span class='chip chip--out'><b>Aux.</b> {e(', '.join(x['musculos_secundarios']))}</span>"
-            steps = "".join(f"<div class='step'><span class='n'>{i+1}</span><p>{e(p)}</p></div>" for i, p in enumerate(x["instrucoes"]))
-            P.append(f"""<section class="sheet ficha"><div class="fx-head"><div><h1 class="fx-title">{e(x['nome']).upper()}</h1><div class="fx-orig">{e(x['nome_original'])}</div></div><div class="fx-idx"><div class="num">{ficha:03d}</div><div class="lbl">Ficha</div></div></div>
+                sec = ", ".join(mapv(MUS_EN, m) for m in x["musculos_secundarios"])
+                chips += f"<span class='chip chip--out'><b>{t['chip_aux']}</b> {e(sec)}</span>"
+            instr = x[t["instr"]] or x.get("instrucoes", [])
+            steps = "".join(f"<div class='step'><span class='n'>{i+1}</span><p>{e(p)}</p></div>" for i, p in enumerate(instr))
+            orig = "" if lang == "en" else e(x["nome_original"])
+            P.append(f"""<section class="sheet ficha"><div class="fx-head"><div><h1 class="fx-title">{e(nome(x)).upper()}</h1><div class="fx-orig">{orig}</div></div><div class="fx-idx"><div class="num">{ficha:03d}</div><div class="lbl">{t['card_lbl']}</div></div></div>
               <div class="chips">{chips}</div>
-              <div class="photos"><div class="photo"><span class="tag">INÍCIO</span><img src="../{x['imagens'][0]}" alt=""></div>{ARROW}<div class="photo"><span class="tag">FIM</span><img src="../{x['imagens'][1]}" alt=""></div></div>
-              <div class="fx-body"><div class="steps"><div class="steps-h">Passo a passo</div>{steps}</div>
-                <aside class="video"><div class="video-card"><div class="video-h">Vídeo do exercício</div><div class="qr"><img src="../{x['qrcode']}" alt="QR code do vídeo"></div><p class="video-cap">Aponte a câmera do celular para o código e assista à demonstração em vídeo.</p></div></aside></div>
+              <div class="photos"><div class="photo"><span class="tag">{'START' if lang=='en' else 'INÍCIO'}</span><img src="../{x['imagens'][0]}" alt=""></div>{ARROW}<div class="photo"><span class="tag">{'END' if lang=='en' else 'FIM'}</span><img src="../{x['imagens'][1]}" alt=""></div></div>
+              <div class="fx-body"><div class="steps"><div class="steps-h">{t['steps_h']}</div>{steps}</div>
+                <aside class="video"><div class="video-card"><div class="video-h">{t['video_h']}</div><div class="qr"><img src="../{x[t['qr']]}" alt="QR"></div><p class="video-cap">{t['video_cap']}</p></div></aside></div>
               <div class="fx-foot"><span class="g">{e(s['titulo'])}</span><span class="p">{page_no}</span></div></section>""")
 
     # ÍNDICE POR EQUIPAMENTO
     por_eq = {}
     for x in EX:
-        por_eq.setdefault(x["equipamento"], []).append(x["nome"])
+        por_eq.setdefault(mapv(EQP_EN, x["equipamento"]), []).append(nome(x))
     blocks = ""
     for eq, nomes in sorted(por_eq.items(), key=lambda kv: -len(kv[1])):
         lis = "".join(f"<li>{e(n)}</li>" for n in sorted(nomes, key=lambda s: s.lower()))
         blocks += f"<div class='blk'><h3>{e(eq)} <span class='q'>{len(nomes)}</span></h3><ul>{lis}</ul></div>"
-    P.append(f"""<section class="flow indice"><h1 class="cap-titulo">ÍNDICE POR EQUIPAMENTO</h1>
-      <p class="lead">Todos os {len(EX)} exercícios organizados pelo equipamento necessário — encontre rápido o que dá para treinar com o que você tem à mão.</p>
+    P.append(f"""<section class="flow indice"><h1 class="cap-titulo">{t['idx_title']}</h1>
+      <p class="lead">{t['idx_lead'].format(n=len(EX))}</p>
       <div class="cols">{blocks}</div>
-      <div class="aviso"><b>Aviso legal:</b> este material tem caráter educacional e não substitui a orientação individualizada de um profissional de educação física ou médico. Se você tem qualquer condição de saúde, lesão prévia ou dor persistente, consulte um profissional antes de iniciar qualquer programa de exercícios. Fotos e dados-base: free-exercise-db (domínio público). Texto em português: conteúdo original.</div></section>""")
+      <div class="aviso">{t['aviso']}</div></section>""")
 
     P.append("</body></html>")
-    OUT.write_text("\n".join(P), encoding="utf-8")
-    print(f"OK -> {OUT}  ({OUT.stat().st_size // 1024} KB, {len(EX)} exercícios, {len(order)} grupos, última pág. {page_no})")
+    t["out"].write_text("\n".join(P), encoding="utf-8")
+    print(f"OK [{lang}] -> {t['out'].name}  ({t['out'].stat().st_size // 1024} KB, {len(EX)} exercícios, {len(order)} grupos, última pág. {page_no})")
 
 if __name__ == "__main__":
-    main()
+    import sys
+    main(sys.argv[1] if len(sys.argv) > 1 else "pt")

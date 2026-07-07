@@ -1,36 +1,42 @@
-# Guia Completo de Exercícios — produto low ticket
+# Guia Completo de Exercícios / Complete Exercise Guide — produto low ticket
 
-E-book em PDF com **152 exercícios ilustrados** em português brasileiro, organizados em 12 grupos
-musculares, com fotos de execução (posição inicial e final), instruções passo a passo, ficha
-técnica (músculo alvo, equipamento, nível, mecânica), QR codes com vídeos demonstrativos e
-6 rotinas de treino prontas.
+E-book em PDF com **152 exercícios ilustrados**, organizados em 12 grupos musculares, com fotos de
+execução (posição inicial e final), instruções passo a passo, ficha técnica (músculo alvo,
+equipamento, nível, mecânica), QR codes com vídeos demonstrativos e 6 rotinas de treino prontas.
+Disponível em **dois idiomas** (mesmo layout "Atlas de Treino"):
 
-**PDF final:** [`dist/guia-completo-de-exercicios.pdf`](dist/guia-completo-de-exercicios.pdf) (~156 páginas, A4)
+- 🇧🇷 **Português:** [`dist/guia-completo-de-exercicios.pdf`](dist/guia-completo-de-exercicios.pdf) (~176 páginas, A4)
+- 🇺🇸 **English:** [`dist/complete-exercise-guide.pdf`](dist/complete-exercise-guide.pdf) (~176 pages, A4)
 
 ## Estrutura do repositório
 
 ```
 content/
-  exercicios.json        # 152 exercícios curados, 100% em PT-BR (fonte da verdade)
-  capitulos/*.md         # capítulos introdutórios e rotinas (Markdown)
+  exercicios.json        # 152 exercícios (fonte da verdade): campos PT + instrucoes_en/qrcode_en
+  capitulos/*.md         # capítulos introdutórios e rotinas em PT (Markdown)
+  capitulos-en/*.md      # mesmos capítulos em inglês
 assets/
   images/                # 304 fotos (2 por exercício) — domínio público
-  qrcodes/               # 152 QR codes (busca do exercício no YouTube)
+  qrcodes/               # 152 QR codes PT (busca do exercício no YouTube em PT)
+  qrcodes-en/            # 152 QR codes EN (busca em inglês)
 scripts/
   curadoria.py           # pipeline: cruza os datasets, cura, copia fotos, monta o JSON
 build/
-  gerar_html.py          # monta build/guia.html a partir de content/
-  build_pdf.sh           # HTML -> PDF via Chromium headless
+  gerar_html.py          # monta o HTML a partir de content/ (aceita idioma: pt|en)
+  build_pdf.sh           # HTML -> PDF via Chromium headless (pt, en ou ambos)
 design/
   PROMPT-DESIGN.md       # prompt pronto para redesenhar o produto com IA (Claude Designer)
 dist/
-  guia-completo-de-exercicios.pdf
+  guia-completo-de-exercicios.pdf   # PT
+  complete-exercise-guide.pdf       # EN
 ```
 
-## Como regenerar o PDF
+## Como regenerar os PDFs
 
 ```bash
-bash build/build_pdf.sh
+bash build/build_pdf.sh        # gera os dois idiomas
+bash build/build_pdf.sh pt     # só português
+bash build/build_pdf.sh en     # só inglês
 ```
 
 Requer Python 3 e Chromium (defina `CHROMIUM=/caminho/do/chrome` se necessário).
@@ -50,4 +56,6 @@ ele lê `content/exercicios.json` e os capítulos e devolve um novo HTML print-r
   (Unlicense — domínio público, uso comercial livre).
 - **Curadoria e taxonomia:** inspiradas em [exercises-dataset](https://github.com/hasaneyldrm/exercises-dataset).
 - **Texto em português (instruções, capítulos, rotinas):** conteúdo original deste repositório.
+- **Texto em inglês:** instruções dos exercícios do free-exercise-db (domínio público) + capítulos
+  traduzidos do conteúdo original.
 - O material tem caráter educacional e não substitui orientação profissional individualizada.
