@@ -36,11 +36,7 @@ CSS = r"""
 html,body{background:#6f6f6b;}
 body{font-family:var(--body); color:var(--ink); -webkit-print-color-adjust:exact; print-color-adjust:exact;}
 
-@page{ size:A4; margin:16mm 16mm 15mm;
-  @bottom-left{ content:"ATLAS DE TREINO — GUIA COMPLETO DE EXERCÍCIOS"; font-family:Arial,sans-serif; font-size:7pt; letter-spacing:1.1px; color:#E8590C; }
-  @bottom-right{ content:counter(page); font-family:Arial,sans-serif; font-size:8pt; color:#5C636B; }
-}
-@page bleed{ size:A4; margin:0; }
+@page{ size:A4; margin:0; }
 
 a{color:var(--action-dark);text-decoration:none;} a:hover{color:var(--action);}
 .disp{ font-family:var(--disp); font-weight:800; font-stretch:condensed; }
@@ -55,9 +51,11 @@ a{color:var(--action-dark);text-decoration:none;} a:hover{color:var(--action);}
   .flow{ width:210mm; min-height:297mm; padding:16mm; background:var(--paper); }
 }
 @media print{
+  html,body{ background:#FAFAF8; }
   .sheet{ break-after:page; }
   .sheet:last-child{ break-after:auto; }
-  .flow{ break-after:page; background:var(--paper); }
+  .flow{ break-after:page; background:var(--paper); padding:16mm; }
+  .flow:last-child{ break-after:auto; }
 }
 
 /* ============ CAPA (1B Manual Técnico) ============ */
